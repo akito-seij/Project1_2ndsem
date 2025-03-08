@@ -2,8 +2,12 @@ package Main;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import Bank.Bank;
+import Accounts.Account;
+import Accounts.CreditAccount;
+import Accounts.SavingsAccount;
 
 public class BankLauncher {
     private List<Bank> banksList;
@@ -52,5 +56,36 @@ public class BankLauncher {
             }
         }
         return null;
+    }
+
+    public void showAccounts() {
+        if (loggedBank == null) {
+            System.out.println("No bank is currently logged in.");
+            return;
+        }
+        System.out.println("Accounts in " + loggedBank.getBankName() + ":");
+        loggedBank.getAccounts().forEach(account -> {
+            System.out.println(account.getAccountDetails());
+        });
+        System.out.println("Press Enter to return to the bank menu...");
+        new Scanner(System.in).nextLine(); // Wait for user input to return to the bank menu
+    }
+
+    public void createNewAccount(String accountType, String accountNumber, String ownerName, double initialBalanceOrCreditLimit, String accountPin) {
+        if (loggedBank == null) {
+            System.out.println("No bank is currently logged in.");
+            return;
+        }
+        if (accountType.equalsIgnoreCase("Savings")) {
+            loggedBank.createNewSavingsAccount(accountNumber, ownerName, initialBalanceOrCreditLimit, accountPin);
+            System.out.println("Savings Account created.");
+        } else if (accountType.equalsIgnoreCase("Credit")) {
+            loggedBank.createNewCreditAccount(accountNumber, ownerName, initialBalanceOrCreditLimit, accountPin);
+            System.out.println("Credit Account created.");
+        } else {
+            System.out.println("Invalid account type.");
+        }
+        System.out.println("Press Enter to return to the bank menu...");
+        new Scanner(System.in).nextLine(); // Wait for user input to return to the bank menu
     }
 }

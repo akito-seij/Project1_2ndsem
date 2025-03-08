@@ -1,8 +1,7 @@
 package Main;
 
-import java.util.Scanner;
-
 import Bank.Bank;
+import java.util.Scanner;
 
 public class Main
 {
@@ -85,10 +84,73 @@ public class Main
         if (currentBank != null)
         {
             System.out.println("Bank logged in: " + currentBank.getBankName());
+            bankOperations(); // Call bankOperations after successful login
         }
         else
         {
             System.out.println("Bank not found.");
+        }
+    }
+
+    /**
+     * Provides operations for a logged-in bank.
+     */
+    private static void bankOperations() {
+        boolean exit = false;
+        while (!exit) {
+            showMenuHeader("Bank Menu");
+            showMenu(31); // Display BankMenu options
+            setOption();
+            int choice = getOption();
+            switch (choice) {
+                case 1:
+                    bankLauncher.showAccounts(); // Call showAccounts from BankLauncher
+                    break;
+                case 2:
+                    createNewAccount(); // Ensure this method is correctly implemented
+                    break;
+                case 3:
+                    bankLauncher.bankLogout();
+                    currentBank = null;
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Invalid option.");
+            }
+        }
+    }
+
+    private static void createNewAccount() {
+        if (currentBank == null) {
+            System.out.println("No bank is currently logged in.");
+            return;
+        }
+        showMenuHeader("Create New Account");
+        System.out.println("[1] Savings Account");
+        System.out.println("[2] Credit Account");
+        System.out.print("Select an option: ");
+        int accChoice = input.nextInt();
+        input.nextLine();
+
+        System.out.print("Enter Account Number: ");
+        String accNum = input.nextLine();
+        System.out.print("Enter Owner Name: ");
+        String ownerName = input.nextLine();
+        System.out.print("Enter Account PIN: ");
+        String pin = input.nextLine();
+
+        if (accChoice == 1) {
+            System.out.print("Enter Initial Balance: ");
+            double initialBalance = input.nextDouble();
+            input.nextLine();
+            bankLauncher.createNewAccount("Savings", accNum, ownerName, initialBalance, pin);
+        } else if (accChoice == 2) {
+            System.out.print("Enter Credit Limit: ");
+            double creditLimit = input.nextDouble();
+            input.nextLine();
+            bankLauncher.createNewAccount("Credit", accNum, ownerName, creditLimit, pin);
+        } else {
+            System.out.println("Invalid option.");
         }
     }
     

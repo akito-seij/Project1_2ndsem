@@ -1,9 +1,8 @@
 package Accounts;
 
+import Bank.Bank;
 import java.util.ArrayList;
 import java.util.List;
-
-import Bank.Bank;
 
 /**
  * Abstract class representing a general bank account.
@@ -64,6 +63,12 @@ public abstract class Account {
      * Subclasses must implement this method.
      */
     public abstract double getBalance();
+
+    /**
+     * Abstract method to return the account details as a string.
+     * Subclasses must implement this method.
+     */
+    public abstract String getAccountDetails();
 
     @Override
     public String toString() {

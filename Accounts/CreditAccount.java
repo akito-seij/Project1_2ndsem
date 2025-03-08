@@ -97,4 +97,10 @@ public class CreditAccount extends Account implements Payment, Recompense {
         return String.format("CreditAccount[%s, loan=%.2f/%.2f, available=%.2f]", 
                 super.toString(), loanAmount, creditLimit, getBalance());
     }
+
+    @Override
+    public String getAccountDetails() {
+        return String.format("Account Number: %s, Loan: %.2f, Credit Limit: %.2f, Available Credit: %.2f",
+                accountNumber, loanAmount, creditLimit, getBalance());
+    }
 }
